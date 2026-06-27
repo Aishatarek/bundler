@@ -27,7 +27,7 @@ function buildCameraSummaryItems(
           originalPrice:
             camera.originalPrice != null
               ? camera.originalPrice * qty
-              : camera.salePrice * qty,
+              : undefined,
           salePrice: camera.salePrice * qty,
         })
       }
@@ -50,7 +50,7 @@ function buildCameraSummaryItems(
           originalPrice:
             camera.originalPrice != null
               ? camera.originalPrice * qty
-              : camera.salePrice * qty,
+              : undefined,
           salePrice: camera.salePrice * qty,
         })
       }
