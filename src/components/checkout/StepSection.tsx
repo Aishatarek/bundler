@@ -1,10 +1,10 @@
-import type { ComponentType, SVGProps } from 'react'
+import type { ComponentType, ReactNode, SVGProps } from 'react'
 import type { StepConfig } from '../../types/product'
 import CameraIcon from '../../assets/icons/camera.svg?react'
 import PlanIcon from '../../assets/icons/plan.svg?react'
 import SensorIcon from '../../assets/icons/sensor.svg?react'
 import ExtraIcon from '../../assets/icons/extra.svg?react'
-import { ChevronDown, ChevronUp, StepLabel } from './CheckoutUI'
+import { ChevronDown, ChevronUp, StepLabel } from '../ui'
 
 const stepIcons: Record<
   StepConfig['icon'],
@@ -34,8 +34,6 @@ export function CollapsedStep({
     step.icon === 'plan'
       ? 'h-[27px] w-[26px] shrink-0 max-[767px]:h-[25px] max-[767px]:w-6'
       : 'h-[26px] w-[26px] shrink-0 max-[767px]:h-5 max-[767px]:w-5'
-  const MobileChevron = step.id === 2 || step.id === 4 ? ChevronDown : ChevronUp
-
   return (
     <section
       className={`flex flex-col items-start gap-[5px] min-[1197px]:mt-[13px] ${isFirst ? '' : 'max-[767px]:pt-[5px]'}`}
@@ -56,17 +54,12 @@ export function CollapsedStep({
             {step.title}
           </h2>
         </div>
-        {selectedCount != null && selectedCount > 0 ? (
-          <>
-            <span className="hidden shrink-0 items-center gap-1 font-medium text-sm leading-4 text-[#4E2FD2] max-[767px]:flex max-[767px]:gap-1">
-              {selectedCount} selected
-              <MobileChevron className="[&_path]:fill-[#4E2FD2]" />
-            </span>
-            <ChevronDown className="max-[767px]:hidden [&_path]:fill-[#4E2FD2]" />
-          </>
-        ) : (
+        <span className="flex shrink-0 items-center gap-1 font-medium text-sm leading-4 text-[#4E2FD2]">
+          {selectedCount != null && selectedCount > 0 && (
+            <>{selectedCount} selected</>
+          )}
           <ChevronDown className="[&_path]:fill-[#4E2FD2]" />
-        )}
+        </span>
       </button>
     </section>
   )
@@ -86,7 +79,11 @@ export function ExpandedStepHeader({
   const Icon = stepIcons[step.icon]
 
   return (
-    <div className="flex w-full items-center justify-between gap-[3px]">
+    <button
+      type="button"
+      onClick={onToggle}
+      className="flex w-full items-center justify-between gap-[3px]"
+    >
       <div className="flex flex-1 items-center gap-2 max-[1196px]:gap-2">
         <Icon
           className="h-[30px] w-[30px] shrink-0 max-[1196px]:h-[26px] max-[1196px]:w-[26px]"
@@ -96,16 +93,40 @@ export function ExpandedStepHeader({
           {step.title}
         </h2>
       </div>
-      {selectedCount != null && selectedCount > 0 && (
-        <button
-          type="button"
-          onClick={onToggle}
-          className="flex items-center gap-1 font-medium text-sm leading-4 text-[#4E2FD2]"
-        >
-          {selectedCount} selected
-          <ChevronUp />
-        </button>
-      )}
-    </div>
+      <span className="flex shrink-0 items-center gap-1 font-medium text-sm leading-4 text-[#4E2FD2]">
+        {selectedCount != null && selectedCount > 0 && (
+          <>{selectedCount} selected</>
+        )}
+        <ChevronUp />
+      </span>
+    </button>
+  )
+}
+
+interface ExpandedStepProps {
+  step: StepConfig
+  selectedCount?: number
+  onToggle: () => void
+  children?: ReactNode
+}
+
+export function ExpandedStep({
+  step,
+  selectedCount,
+  onToggle,
+  children,
+}: ExpandedStepProps) {
+  return (
+    <section className="flex flex-col gap-[5px] rounded-[10px] bg-[#EDF4FF] pt-[15px]">
+      <StepLabel>{step.stepLabel}</StepLabel>
+      <div className="flex flex-col items-center gap-[15px] border-t-[0.5px] border-[#1F1F1F] px-[15px] py-5">
+        <ExpandedStepHeader
+          step={step}
+          selectedCount={selectedCount}
+          onToggle={onToggle}
+        />
+        {children}
+      </div>
+    </section>
   )
 }

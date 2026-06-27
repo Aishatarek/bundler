@@ -1,5 +1,5 @@
 import offerBadge from '../../assets/images/offer-badge.png'
-import { Button } from './Button'
+import { Button } from '../ui'
 
 interface CheckoutSidebarProps {
   guaranteeTitle: string
@@ -8,6 +8,9 @@ interface CheckoutSidebarProps {
   originalTotal: number
   finalTotal: number
   savings: number
+  onCheckout?: () => void
+  onSave?: () => void
+  isSaved?: boolean
 }
 
 export function CheckoutSidebar({
@@ -17,6 +20,9 @@ export function CheckoutSidebar({
   originalTotal,
   finalTotal,
   savings,
+  onCheckout,
+  onSave,
+  isSaved = false,
 }: CheckoutSidebarProps) {
   return (
     <div className="flex w-full min-w-0 flex-col gap-2 min-[1197px]:w-[350px] min-[1197px]:shrink-0 min-[768px]:max-[1196px]:flex-1 max-[767px]:gap-1">
@@ -82,12 +88,16 @@ export function CheckoutSidebar({
           Congrats! You&apos;re saving ${savings.toFixed(2)} on your security
           bundle!
         </p>
-        <Button variant="primary">Checkout</Button>
+        <Button variant="primary" onClick={onCheckout}>
+          Checkout
+        </Button>
         <Button
           variant="text"
           className="w-full text-center max-[767px]:text-xs max-[767px]:leading-[14.4px]"
+          onClick={onSave}
+          disabled={isSaved}
         >
-          Save my system for later
+          {isSaved ? 'Saved' : 'Save my system for later'}
         </Button>
       </div>
     </div>

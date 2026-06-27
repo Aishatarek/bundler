@@ -1,7 +1,7 @@
 import type { SummaryItem, SummarySection } from '../../types/product'
 import CarbonDeliveryIcon from '../../assets/icons/carbon_delivery.svg?react'
 import UnlimitedIcon from '../../assets/icons/unlimited.svg?react'
-import { PriceDisplay, QuantityControl } from './CheckoutUI'
+import { PriceDisplay, QuantityControl } from '../ui'
 
 interface SummaryLineItemProps {
   item: SummaryItem

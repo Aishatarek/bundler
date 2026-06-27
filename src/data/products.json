@@ -5,19 +5,21 @@
       "stepLabel": "Step 1 of 4",
       "title": "Choose your cameras",
       "icon": "camera",
-      "nextButton": "Next: Choose your sensors"
+      "nextButton": "Next: Choose your plan"
     },
     {
       "id": 2,
       "stepLabel": "Step 2 of 4",
       "title": "Choose your plan",
-      "icon": "plan"
+      "icon": "plan",
+      "nextButton": "Next: Choose your sensors"
     },
     {
       "id": 3,
       "stepLabel": "Step 3 of 4",
       "title": "Choose your sensors",
-      "icon": "sensor"
+      "icon": "sensor",
+      "nextButton": "Next: Add extra protection"
     },
     {
       "id": 4,
@@ -168,6 +170,57 @@
       ]
     }
   ],
+  "plans": [
+    {
+      "id": "cam-unlimited",
+      "name": "Cam Unlimited",
+      "description": "24/7 cloud recording for all your Wyze cams.",
+      "originalPrice": 12.99,
+      "salePrice": 9.99,
+      "priceSuffix": "/mo",
+      "selected": true,
+      "isPlan": true
+    },
+    {
+      "id": "cam-plus",
+      "name": "Cam Plus",
+      "description": "Smart detections and cloud events for one camera.",
+      "originalPrice": 2.99,
+      "salePrice": 1.99,
+      "priceSuffix": "/mo",
+      "selected": false,
+      "isPlan": true
+    }
+  ],
+  "sensors": [
+    {
+      "id": "motion-sensor",
+      "name": "Wyze Sense Motion Sensor",
+      "description": "Detect motion and trigger alerts.",
+      "image": "/images/products/Wyze-Sense-Motion-Sensor.png",
+      "salePrice": 29.99,
+      "quantity": 2
+    },
+    {
+      "id": "sense-hub",
+      "name": "Wyze Sense Hub (Required)",
+      "description": "Required hub for Wyze Sense sensors.",
+      "image": "/images/products/Wyze-Sense-Hub.png",
+      "originalPrice": 29.92,
+      "salePriceLabel": "FREE",
+      "quantity": 1
+    }
+  ],
+  "accessories": [
+    {
+      "id": "microsd",
+      "name": "Wyze MicroSD Card (256GB)",
+      "description": "Local storage for continuous recording.",
+      "image": "/images/products/Wyze-MicroSD-Card.png",
+      "salePrice": 20.98,
+      "quantity": 0
+    }
+  ],
   "summary": {
     "title": "Your security system",
     "subtitle": "Review your personalized protection system designed to keep what matters most safe.",
@@ -220,8 +273,7 @@
             "image": "/images/products/Wyze-Sense-Hub.png",
             "quantity": 1,
             "originalPrice": 29.92,
-            "salePriceLabel": "FREE",
-            "quantityLocked": true
+            "salePriceLabel": "FREE"
           }
         ]
       },

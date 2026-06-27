@@ -41,6 +41,34 @@ export interface StepConfig {
   nextButton?: string
 }
 
+export interface StepProduct {
+  id: string
+  name: string
+  description?: string
+  image: string
+  originalPrice?: number | null
+  salePrice?: number
+  salePriceLabel?: string
+  priceSuffix?: string
+  quantity: number
+  selected?: boolean
+  quantityLocked?: boolean
+  isPlan?: boolean
+}
+
+export interface PlanProduct {
+  id: string
+  name: string
+  description?: string
+  image?: string
+  originalPrice?: number | null
+  salePrice?: number
+  salePriceLabel?: string
+  priceSuffix?: string
+  selected?: boolean
+  isPlan?: boolean
+}
+
 export interface SummaryItem {
   id: string
   name: string
@@ -64,6 +92,9 @@ export interface SummarySection {
 export interface ProductsData {
   steps: StepConfig[]
   cameras: CameraProduct[]
+  plans: PlanProduct[]
+  sensors: StepProduct[]
+  accessories: StepProduct[]
   summary: {
     title: string
     subtitle: string

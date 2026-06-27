@@ -25,7 +25,7 @@ export function Button({
   return (
     <button
       type={type}
-      className={`${variantStyles[variant]} ${className}`.trim()}
+      className={`cursor-pointer ${variantStyles[variant]} ${className}`.trim()}
       {...props}
     >
       {children}
