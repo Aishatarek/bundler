@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+/*
+  Gilroy is a commercial font — it is NOT included in this repo.
+  The rules below only load Gilroy if:
+    1. It is installed on your OS, OR
+    2. You add .woff2 files to src/assets/fonts/ (see filenames below)
+  Until then, "DM Sans" (imported in main.tsx) is used as the fallback.
+*/
+@font-face {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src:
+    local("Gilroy Regular"),
+    local("Gilroy-Regular"),
+    url("./assets/fonts/Gilroy-Regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src:
+    local("Gilroy Medium"),
+    local("Gilroy-Medium"),
+    url("./assets/fonts/Gilroy-Medium.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src:
+    local("Gilroy SemiBold"),
+    local("Gilroy-SemiBold"),
+    url("./assets/fonts/Gilroy-SemiBold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Gilroy";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src:
+    local("Gilroy Bold"),
+    local("Gilroy-Bold"),
+    url("./assets/fonts/Gilroy-Bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Gilroy";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src:
+    local("Gilroy Regular Italic"),
+    local("Gilroy-RegularItalic"),
+    url("./assets/fonts/Gilroy-RegularItalic.woff2") format("woff2");
+}
+
+@theme {
+  --font-sans: "Gilroy", "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-button: "TT Norms Pro", "Gilroy", "DM Sans", ui-sans-serif, system-ui,
+    sans-serif;
+
+  /* Figma color tokens */
+  --color-wyze-purple: #4e2fd2;
+  --color-obsidian: #0b0d10;
+  --color-gray-500: #a8b2bd;
+  --color-gray-600: #6f7882;
+  --color-teal: #0aa288;
+  --color-red-sale: #d8392b;
+  --color-price: #575757;
+  --color-step-bg: #edf4ff;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  width: 100%;
+  min-height: 100svh;
+}
