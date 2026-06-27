@@ -143,10 +143,23 @@ export function createDefaultBundleState(data: ProductsData): BundleState {
   )
 
   const cameraVariants: Record<string, Record<string, number>> = {}
+  const selectedColors: Record<string, string> = {}
+  const imageColors: Record<string, string> = {}
+
   for (const camera of data.cameras) {
-    const variantKey = getVariantKey(camera)
     const qty = defaultCameraQty.get(camera.id) ?? 0
-    cameraVariants[camera.id] = { [variantKey]: qty }
+
+    if (qty > 0) {
+      const variantKey = getVariantKey(camera)
+      cameraVariants[camera.id] = { [variantKey]: qty }
+      if (camera.colors.length > 0) {
+        selectedColors[camera.id] = variantKey
+        imageColors[camera.id] = variantKey
+      }
+    } else {
+      cameraVariants[camera.id] = {}
+      selectedColors[camera.id] = ''
+    }
   }
 
   const sensorSection = data.summary.sections.find((s) => s.id === 'sensors')
@@ -167,10 +180,8 @@ export function createDefaultBundleState(data: ProductsData): BundleState {
 
   return syncSenseHubWithSensors({
     cameraVariants,
-    selectedColors: Object.fromEntries(
-      data.cameras.map((camera) => [camera.id, getDefaultColorId(camera)]),
-    ),
-    imageColors: {},
+    selectedColors,
+    imageColors,
     plans: data.plans.map((plan) => ({ ...plan })),
     sensors: data.sensors.map((sensor) => ({
       ...sensor,
@@ -183,6 +194,37 @@ export function createDefaultBundleState(data: ProductsData): BundleState {
   })
 }
 
+function reconcileColorSelection(
+  state: BundleState,
+  cameras: CameraProduct[],
+): BundleState {
+  const selectedColors = { ...state.selectedColors }
+  const imageColors = { ...state.imageColors }
+
+  for (const camera of cameras) {
+    const variants = state.cameraVariants[camera.id] ?? {}
+    const hasQty = Object.values(variants).some((qty) => qty > 0)
+
+    if (!hasQty) {
+      if (!imageColors[camera.id]) {
+        selectedColors[camera.id] = ''
+      }
+      continue
+    }
+
+    if (camera.colors.length === 0 || selectedColors[camera.id]) continue
+
+    const colorWithQty = Object.entries(variants).find(
+      ([key, qty]) => qty > 0 && key !== DEFAULT_VARIANT_KEY,
+    )?.[0]
+    const colorId = colorWithQty ?? getDefaultColorId(camera)
+    selectedColors[camera.id] = colorId
+    imageColors[camera.id] = colorId
+  }
+
+  return { ...state, selectedColors, imageColors }
+}
+
 export function loadBundleState(data: ProductsData): BundleState {
   try {
     const stored = localStorage.getItem(BUNDLE_STORAGE_KEY)
@@ -191,26 +233,29 @@ export function loadBundleState(data: ProductsData): BundleState {
     }
 
     const parsed = JSON.parse(stored) as BundleState
-    return syncSenseHubWithSensors({
-      ...createDefaultBundleState(data),
-      ...parsed,
-      plans: data.plans.map((plan) => {
-        const storedPlan = parsed.plans?.find((p) => p.id === plan.id)
-        return storedPlan ? { ...plan, selected: storedPlan.selected } : { ...plan }
+    return reconcileColorSelection(
+      syncSenseHubWithSensors({
+        ...createDefaultBundleState(data),
+        ...parsed,
+        plans: data.plans.map((plan) => {
+          const storedPlan = parsed.plans?.find((p) => p.id === plan.id)
+          return storedPlan ? { ...plan, selected: storedPlan.selected } : { ...plan }
+        }),
+        sensors: data.sensors.map((sensor) => {
+          const storedSensor = parsed.sensors?.find((s) => s.id === sensor.id)
+          return storedSensor
+            ? { ...sensor, quantity: storedSensor.quantity }
+            : { ...sensor }
+        }),
+        accessories: data.accessories.map((accessory) => {
+          const storedAccessory = parsed.accessories?.find((a) => a.id === accessory.id)
+          return storedAccessory
+            ? { ...accessory, quantity: storedAccessory.quantity }
+            : { ...accessory }
+        }),
       }),
-      sensors: data.sensors.map((sensor) => {
-        const storedSensor = parsed.sensors?.find((s) => s.id === sensor.id)
-        return storedSensor
-          ? { ...sensor, quantity: storedSensor.quantity }
-          : { ...sensor }
-      }),
-      accessories: data.accessories.map((accessory) => {
-        const storedAccessory = parsed.accessories?.find((a) => a.id === accessory.id)
-        return storedAccessory
-          ? { ...accessory, quantity: storedAccessory.quantity }
-          : { ...accessory }
-      }),
-    })
+      data.cameras,
+    )
   } catch {
     return createDefaultBundleState(data)
   }
@@ -263,9 +308,14 @@ function buildCameraSummaryItems(
     for (const color of camera.colors) {
       const qty = getVariantQuantity(cameraVariants, camera.id, color.id)
       if (qty > 0) {
+        const name =
+          color.id === 'white'
+            ? camera.name
+            : `${camera.name} - ${color.label}`
+
         items.push({
           id: `summary-${camera.id}-${color.id}`,
-          name: `${camera.name} - ${color.label}`,
+          name,
           image: color.image,
           quantity: qty,
           originalPrice:
@@ -447,20 +497,61 @@ export function updateCameraVariantQuantity(
 
 export function applyCameraVariantQuantityChange(
   state: BundleState,
-  _data: ProductsData,
+  data: ProductsData,
   cameraId: string,
   colorId: string,
   quantity: number,
 ): BundleState {
-  return {
+  const camera = data.cameras.find((c) => c.id === cameraId)
+  const nextQty = Math.max(0, quantity)
+
+  if (nextQty === 0) {
+    return {
+      ...state,
+      cameraVariants: {
+        ...state.cameraVariants,
+        [cameraId]: {},
+      },
+      selectedColors: {
+        ...state.selectedColors,
+        [cameraId]: '',
+      },
+      imageColors: Object.fromEntries(
+        Object.entries(state.imageColors).filter(([id]) => id !== cameraId),
+      ),
+    }
+  }
+
+  let effectiveColorId = colorId
+  if (!effectiveColorId && camera && camera.colors.length > 0) {
+    effectiveColorId = getDefaultColorId(camera)
+  }
+
+  const nextState: BundleState = {
     ...state,
     cameraVariants: updateCameraVariantQuantity(
       state.cameraVariants,
       cameraId,
-      colorId,
-      quantity,
+      effectiveColorId,
+      nextQty,
     ),
   }
+
+  if (effectiveColorId && camera && camera.colors.length > 0) {
+    return {
+      ...nextState,
+      selectedColors: {
+        ...nextState.selectedColors,
+        [cameraId]: effectiveColorId,
+      },
+      imageColors: {
+        ...nextState.imageColors,
+        [cameraId]: effectiveColorId,
+      },
+    }
+  }
+
+  return nextState
 }
 
 export function applySensorQuantityChange(

@@ -115,15 +115,15 @@ export function CheckoutReview({
         </div>
       </aside>
 
-      <section className="hidden flex-col gap-[5px] rounded-[10px] bg-[#EDF4FF] pt-[15px] min-[768px]:max-[1196px]:flex">
-        <div className="flex w-full flex-col gap-2.5 px-5 pb-[31px] pt-5 min-[768px]:max-[900px]:px-4">
-          <div className="flex w-full flex-row items-start gap-[52px] min-[768px]:max-[900px]:gap-6">
+      <section className="hidden flex-col gap-[5px] rounded-[10px] bg-[#EDF4FF] pt-[15px] min-[777px]:max-[1196px]:flex">
+        <div className="flex w-full flex-col gap-2.5 px-5 pb-[31px] pt-5 min-[777px]:max-[900px]:px-4">
+          <div className="flex w-full flex-row items-start gap-[52px] min-[777px]:max-[900px]:gap-6">
             <ReviewContent {...reviewProps} />
           </div>
         </div>
       </section>
 
-      <section className="hidden w-full flex-col gap-[5px] bg-[#EDF4FF] pt-[15px] max-[767px]:flex">
+      <section className="hidden w-full flex-col gap-[5px] bg-[#EDF4FF] pt-[15px] max-[776px]:flex">
         <div className="flex h-[10px] w-full items-center">
           <StepLabel collapsed>Review</StepLabel>
         </div>

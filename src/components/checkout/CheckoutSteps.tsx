@@ -47,7 +47,7 @@ export function CheckoutSteps({
   const { cameraVariants } = bundleState
 
   return (
-    <div className="flex min-w-0 w-full flex-1 flex-col gap-[13px] min-[1197px]:gap-y-0 max-[767px]:w-full max-[767px]:gap-0">
+    <div className="flex min-w-0 w-full flex-1 flex-col gap-[13px] min-[1197px]:gap-y-0 max-[776px]:w-full max-[776px]:gap-0">
       {data.steps.map((step, index) =>
         expandedStep === step.id ? (
           <ExpandedStep
@@ -57,7 +57,7 @@ export function CheckoutSteps({
             onToggle={() => onToggleStep(step.id)}
           >
             {step.id === 1 && (
-              <div className="grid w-full grid-cols-2 gap-[15px] max-[1196px]:flex max-[1196px]:gap-[15px] max-[767px]:flex-col min-[1197px]:[&>*:last-child:nth-child(odd)]:col-span-2 min-[1197px]:[&>*:last-child:nth-child(odd)]:mx-auto">
+              <div className="grid w-full grid-cols-2 gap-[15px] max-[1196px]:flex max-[1196px]:gap-[15px] max-[776px]:flex-col min-[1197px]:[&>*:last-child:nth-child(odd)]:col-span-2 min-[1197px]:[&>*:last-child:nth-child(odd)]:mx-auto">
                 {data.cameras.map((camera) => {
                   const selectedColorId = selectedColors[camera.id] ?? ''
                   const variantQty = getVariantQuantity(

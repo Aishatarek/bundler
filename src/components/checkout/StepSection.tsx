@@ -32,11 +32,11 @@ export function CollapsedStep({
   const Icon = stepIcons[step.icon]
   const iconClassName =
     step.icon === 'plan'
-      ? 'h-[27px] w-[26px] shrink-0 max-[767px]:h-[25px] max-[767px]:w-6'
-      : 'h-[26px] w-[26px] shrink-0 max-[767px]:h-5 max-[767px]:w-5'
+      ? 'h-[30px] w-[30px] min-[1196px]:h-[26px] min-[1196px]:w-[26px] shrink-0 max-[776px]:h-[25px] max-[776px]:w-6'
+      : 'h-[30px] w-[30px] min-[1196px]:h-[26px] min-[1196px]:w-[26px] shrink-0 max-[776px]:h-5 max-[776px]:w-5'
   return (
     <section
-      className={`flex flex-col items-start gap-[5px] min-[1197px]:mt-[13px] ${isFirst ? '' : 'max-[767px]:pt-[5px]'}`}
+      className={`flex flex-col items-start gap-[5px] min-[1197px]:mt-[13px] ${isFirst ? '' : 'max-[776px]:pt-[5px]'}`}
     >
       <div className="flex h-[10px] w-full items-center">
         <StepLabel collapsed>{step.stepLabel}</StepLabel>
@@ -44,13 +44,13 @@ export function CollapsedStep({
       <button
         type="button"
         onClick={onToggle}
-        className={`box-border flex h-[67px] w-full items-center justify-between gap-[3px] border-y-[0.5px] border-y-[#1F1F1F] px-[15px] py-5 max-[767px]:h-[60px] ${
-          step.icon === 'plan' ? 'max-[767px]:h-[65px]' : ''
+        className={`box-border flex h-[67px] w-full items-center justify-between gap-[3px] border-y-[0.5px] border-y-[#1F1F1F] px-[15px] py-5 max-[776px]:h-[60px] ${
+          step.icon === 'plan' ? 'max-[776px]:h-[65px]' : ''
         }`}
       >
-        <div className="flex min-w-0 flex-1 items-center gap-2 max-[767px]:gap-2">
+        <div className="flex min-w-0 flex-1 items-center gap-2 max-[776px]:gap-2">
           <Icon className={iconClassName} aria-hidden />
-          <h2 className="font-semibold text-[22px] leading-[22px] text-[#0B0D10] max-[767px]:text-lg max-[767px]:leading-[18px]">
+          <h2 className="font-semibold text-[28px] leading-[28px] text-[#0B0D10] max-[776px]:text-base max-[776px]:leading-4 min-[1196px]:text-[22px] min-[1196px]:leading-[22px]">
             {step.title}
           </h2>
         </div>
@@ -84,12 +84,12 @@ export function ExpandedStepHeader({
       onClick={onToggle}
       className="flex w-full items-center justify-between gap-[3px]"
     >
-      <div className="flex flex-1 items-center gap-2 max-[1196px]:gap-2">
+      <div className="flex flex-1 items-start gap-2 max-[1196px]:gap-2">
         <Icon
-          className="h-[30px] w-[30px] shrink-0 max-[1196px]:h-[26px] max-[1196px]:w-[26px]"
+          className="h-[30px] w-[30px] shrink-0 min-[1196px]:h-[26px] min-[1196px]:w-[26px]"
           aria-hidden
         />
-        <h2 className="font-semibold text-[28px] leading-[28px] text-[#0B0D10] max-[1196px]:text-[22px] max-[1196px]:leading-[22px]">
+        <h2 className="font-semibold text-[28px] leading-[28px] text-[#0B0D10] min-[1196px]:text-[22px] min-[1196px]:leading-[22px] max-[776px]:text-base max-[776px]:leading-4">
           {step.title}
         </h2>
       </div>

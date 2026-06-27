@@ -57,7 +57,7 @@ function ColorSwatches({
         <ColorSwatch
           key={color.id}
           color={color}
-          selected={selectedColorId === color.id}
+          selected={selectedColorId !== '' && selectedColorId === color.id}
           onSelect={() => onColorChange(color.id)}
         />
       ))}
@@ -65,48 +65,32 @@ function ColorSwatches({
   )
 }
 
-function DesktopAltContent({
+function DesktopCompactContent({
   product,
-  selectedColorId,
   onQuantityChange,
-  onColorChange,
-  variant,
 }: {
   product: CameraProduct
-  selectedColorId: string
   onQuantityChange: (quantity: number) => void
-  onColorChange: (colorId: string) => void
-  variant: 'standalone' | 'compact'
 }) {
-  const contentHeight = variant === 'standalone' ? 144 : 110
-  const headerHeight = variant === 'standalone' ? undefined : 72
-
   return (
     <div
-      style={{ height: contentHeight }}
+      style={{ height: 110 }}
       className="hidden w-[205px] shrink-0 flex-col items-start gap-2.5 min-[1197px]:flex"
     >
       <div
-        style={headerHeight != null ? { height: headerHeight } : undefined}
+        style={{ height: 72 }}
         className="flex w-full flex-col items-start gap-2"
       >
         <h3 className="flex w-full items-center font-semibold text-base leading-4 tracking-[0.6px] text-[#1F1F1F]">
           {product.name}
         </h3>
-        <p className="w-full font-normal text-xs leading-[130%] tracking-[0.6px] text-[rgba(31,31,31,0.75)]">
+        <p className="w-full font-medium text-xs leading-[130%] tracking-[0.8px] text-[rgba(31,31,31,0.75)]">
           {product.description}{' '}
           <span className="text-[#0000EE] underline">Learn More</span>
         </p>
-        {variant === 'standalone' && (
-          <ColorSwatches
-            colors={product.colors}
-            selectedColorId={selectedColorId}
-            onColorChange={onColorChange}
-          />
-        )}
       </div>
 
-      <div className="flex w-full flex-row items-end gap-[46px]">
+      <div className="flex w-full flex-row items-end gap-[46px] flex-wrap">
         <QuantityControl
           value={product.quantity}
           onChange={onQuantityChange}
@@ -131,13 +115,16 @@ export function CameraProductCard({
   onColorChange,
 }: CameraProductCardProps) {
   const isSelected = product.quantity > 0
-  const isStandalone = product.cardLayout === 'standalone'
   const isCompact = product.cardLayout === 'compact'
-  const isAltLayout = isStandalone || isCompact
+  const defaultColorId =
+    product.colors.find((c) => c.selected)?.id ?? product.colors[0]?.id
   const activeColor = imageColorId
     ? product.colors.find((c) => c.id === imageColorId)
     : null
-  const displayImage = activeColor?.image ?? product.image
+  const displayImage =
+    !activeColor || imageColorId === defaultColorId
+      ? product.image
+      : activeColor.image
   const imageTranslateX = product.imageTranslateX ?? -15
   const imageTranslateClass =
     imageTranslateX === 0
@@ -155,12 +142,12 @@ export function CameraProductCard({
 
   const titleClass =
     product.titleSize === 'md'
-      ? 'text-base leading-4'
-      : 'text-lg leading-[18px] max-[1196px]:text-base max-[1196px]:leading-4'
+      ? 'text-base leading-4 max-[776px]:text-sm max-[776px]:leading-4'
+      : 'text-lg leading-[18px] max-[1196px]:text-base max-[1196px]:leading-4 max-[776px]:text-sm max-[776px]:leading-4'
   const descClass =
     product.descriptionSize === 'sm'
       ? 'text-xs leading-[130%]'
-      : 'text-sm leading-[130%] max-[1196px]:text-xs max-[1196px]:leading-[130%]'
+      : 'text-sm leading-[130%] max-[1196px]:text-xs max-[1196px]:leading-[130%] max-[776px]:text-[11px] max-[776px]:leading-[130%]'
 
   const desktopGap =
     isSelected ? 'min-[1197px]:gap-[19px]' : 'min-[1197px]:gap-[13px]'
@@ -173,13 +160,20 @@ export function CameraProductCard({
 
   const imageClassName = `h-full w-full max-w-none scale-[1.4] object-contain ${imageTranslateClass} max-[1196px]:max-h-[146px] max-[1196px]:w-full max-[1196px]:max-w-[202px] max-[1196px]:translate-x-0 max-[1196px]:scale-100`
 
+  const handleCardClick = (event: React.MouseEvent<HTMLElement>) => {
+    if (product.quantity > 0) return
+    if ((event.target as HTMLElement).closest('button')) return
+    onQuantityChange(1)
+  }
+
   return (
     <article
       style={{
         minHeight: cardHeight,
         ...(cardWidth != null ? { width: cardWidth } : {}),
       }}
-      className={`relative box-border flex min-w-0 flex-none flex-row items-center rounded-[10px] border-2 bg-white p-[11px] max-[1196px]:!h-[331.1px] max-[1196px]:!w-auto max-[1196px]:flex-1 max-[1196px]:flex-col max-[1196px]:items-center max-[1196px]:justify-center max-[1196px]:px-[11px] max-[1196px]:py-[14px] max-[767px]:!h-auto max-[767px]:w-full max-[767px]:flex-none ${desktopGap} ${desktopBorder} ${tabletBorder} ${cardWidth != null ? 'min-[1197px]:mx-auto' : ''}`}
+      onClick={handleCardClick}
+      className={`relative box-border flex min-w-[1196px]:flex-wrap min-w-0 flex-none flex-row items-center rounded-[10px] border-2 bg-white p-[11px] max-[1196px]:h-[331.1px]! max-[1196px]:w-auto! max-[1196px]:flex-1 max-[1196px]:flex-col max-[1196px]:items-center max-[1196px]:justify-center max-[1196px]:px-[11px] max-[1196px]:py-[14px] max-[776px]:!h-auto max-[776px]:w-full max-[776px]:flex-none max-[776px]:max-w-none ${desktopGap} ${desktopBorder} ${tabletBorder} ${!isSelected ? 'cursor-pointer' : ''} ${cardWidth != null ? 'min-[1197px]:mx-auto' : ''}`}
     >
       {product.savePercent != null && (
         <span className="absolute left-[11px] top-[11px] z-10 flex h-[19px] items-center justify-center rounded-[10px] bg-[#4E2FD2] px-1.5 py-0.5 font-semibold text-xs leading-[15px] text-white max-[1196px]:left-[15px] max-[1196px]:top-[11px]">
@@ -194,14 +188,11 @@ export function CameraProductCard({
         <img src={displayImage} alt={product.name} className={imageClassName} />
       </div>
 
-      {/* Desktop / lab layout */}
-      {isAltLayout ? (
-        <DesktopAltContent
+      {/* Desktop layout — compact uses a shorter alt panel; standalone matches default */}
+      {isCompact ? (
+        <DesktopCompactContent
           product={product}
-          selectedColorId={selectedColorId}
           onQuantityChange={onQuantityChange}
-          onColorChange={onColorChange}
-          variant={isStandalone ? 'standalone' : 'compact'}
         />
       ) : (
         <div className="hidden min-w-0 flex-1 flex-col items-start gap-2.5 self-stretch min-[1197px]:flex">
@@ -209,7 +200,7 @@ export function CameraProductCard({
             <h3 className="flex w-full items-center font-semibold text-base leading-4 tracking-[0.6px] text-[#1F1F1F]">
               {product.name}
             </h3>
-            <p className="w-full font-normal text-xs leading-[130%] tracking-[0.6px] text-[rgba(31,31,31,0.75)]">
+            <p className="w-full font-medium text-xs leading-[130%] tracking-[0.6px] text-[rgba(31,31,31,0.75)]">
               {product.description}{' '}
               <span className="text-[#0000EE] underline">Learn More</span>
             </p>

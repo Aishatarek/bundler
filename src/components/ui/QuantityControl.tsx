@@ -25,7 +25,7 @@ export function QuantityControl({
   if (!isSummary) {
     return (
       <div
-        className={`flex w-[80px] shrink-0 items-center justify-center gap-2.5 py-1 ${compact ? 'h-[28px]' : 'h-[35px]'}`}
+        className={`flex w-[80px] shrink-0 items-center justify-between py-1 ${compact ? 'h-[28px]' : 'h-[35px]'}`}
       >
         <button
           type="button"
@@ -43,7 +43,7 @@ export function QuantityControl({
             aria-hidden
           />
         </button>
-        <span className="flex min-w-[6px] items-end font-medium text-base leading-5 text-[#0B0D10]">
+        <span className="min-w-0 flex-1 text-center font-medium tabular-nums text-base leading-5 text-[#0B0D10]">
           {value}
         </span>
         <button
@@ -79,15 +79,19 @@ export function QuantityControl({
         }`}
       >
         <MinusIcon
-          className={`h-2 w-2 ${isMinusActive || (isSummary && canDecrease) ? '[&_path]:fill-[#575757]' : '[&_path]:fill-[#CED6DE]'}`}
+          className={`h-2 w-2 ${
+            disabled && isSummary
+              ? '[&_path]:fill-[#575757]'
+              : isMinusActive || (isSummary && canDecrease)
+                ? '[&_path]:fill-[#575757]'
+                : '[&_path]:fill-[#CED6DE]'
+          }`}
           aria-hidden
         />
       </button>
       <span
-        className={`font-medium text-[#0B0D10] ${
-          isSummary
-            ? 'w-2 text-sm font-semibold leading-4'
-            : 'w-1.5 text-base leading-5'
+        className={`min-w-0 flex-1 text-center font-medium tabular-nums text-[#0B0D10] ${
+          isSummary ? 'text-sm font-semibold leading-4' : 'text-base leading-5'
         }`}
       >
         {value}
