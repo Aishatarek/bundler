@@ -36,7 +36,7 @@ export function CollapsedStep({
       : 'h-[30px] w-[30px] min-[1196px]:h-[26px] min-[1196px]:w-[26px] shrink-0 max-[776px]:h-5 max-[776px]:w-5'
   return (
     <section
-      className={`flex flex-col items-start gap-[5px] min-[1197px]:mt-[13px] ${isFirst ? '' : 'max-[776px]:pt-[5px]'}`}
+      className={`flex flex-col items-start gap-xs min-[1197px]:mt-lg ${isFirst ? '' : 'max-[776px]:pt-xs'}`}
     >
       <div className="flex h-[10px] w-full items-center">
         <StepLabel collapsed>{step.stepLabel}</StepLabel>
@@ -44,21 +44,21 @@ export function CollapsedStep({
       <button
         type="button"
         onClick={onToggle}
-        className={`box-border flex h-[67px] w-full items-center justify-between gap-[3px] border-y-[0.5px] border-y-[#1F1F1F] px-[15px] py-5 max-[776px]:h-[60px] ${
+        className={`box-border flex h-[67px] w-full items-center justify-between gap-2xs border-y-hairline border-y-ink px-step py-5 max-[776px]:h-[60px] ${
           step.icon === 'plan' ? 'max-[776px]:h-[65px]' : ''
         }`}
       >
         <div className="flex min-w-0 flex-1 items-center gap-2 max-[776px]:gap-2">
           <Icon className={iconClassName} aria-hidden />
-          <h2 className="font-semibold text-[28px] leading-[28px] text-[#0B0D10] max-[776px]:text-base max-[776px]:leading-4 min-[1196px]:text-[22px] min-[1196px]:leading-[22px]">
+          <h2 className="font-semibold text-[28px] leading-[28px] text-obsidian max-[776px]:text-base max-[776px]:leading-4 min-[1196px]:text-[22px] min-[1196px]:leading-[22px]">
             {step.title}
           </h2>
         </div>
-        <span className="flex shrink-0 items-center gap-1 font-medium text-sm leading-4 text-[#4E2FD2]">
+        <span className="flex shrink-0 items-center gap-1 font-medium text-sm leading-4 text-wyze-purple">
           {selectedCount != null && selectedCount > 0 && (
             <>{selectedCount} selected</>
           )}
-          <ChevronDown className="[&_path]:fill-[#4E2FD2]" />
+          <ChevronDown className="[&_path]:fill-wyze-purple" />
         </span>
       </button>
     </section>
@@ -82,18 +82,18 @@ export function ExpandedStepHeader({
     <button
       type="button"
       onClick={onToggle}
-      className="flex w-full items-center justify-between gap-[3px]"
+      className="flex w-full items-center justify-between gap-2xs"
     >
       <div className="flex flex-1 items-start gap-2 max-[1196px]:gap-2">
         <Icon
           className="h-[30px] w-[30px] shrink-0 min-[1196px]:h-[26px] min-[1196px]:w-[26px]"
           aria-hidden
         />
-        <h2 className="font-semibold text-[28px] leading-[28px] text-[#0B0D10] min-[1196px]:text-[22px] min-[1196px]:leading-[22px] max-[776px]:text-base max-[776px]:leading-4">
+        <h2 className="font-semibold text-[28px] leading-[28px] text-obsidian min-[1196px]:text-[22px] min-[1196px]:leading-[22px] max-[776px]:text-base max-[776px]:leading-4">
           {step.title}
         </h2>
       </div>
-      <span className="flex shrink-0 items-center gap-1 font-medium text-sm leading-4 text-[#4E2FD2]">
+      <span className="flex shrink-0 items-center gap-1 font-medium text-sm leading-4 text-wyze-purple">
         {selectedCount != null && selectedCount > 0 && (
           <>{selectedCount} selected</>
         )}
@@ -117,9 +117,9 @@ export function ExpandedStep({
   children,
 }: ExpandedStepProps) {
   return (
-    <section className="flex flex-col gap-[5px] rounded-[10px] bg-[#EDF4FF] pt-[15px]">
+    <section className="flex flex-col gap-xs rounded-card bg-step-bg pt-step">
       <StepLabel>{step.stepLabel}</StepLabel>
-      <div className="flex flex-col items-center gap-[15px] border-t-[0.5px] border-[#1F1F1F] px-[15px] py-5">
+      <div className="flex flex-col items-center gap-step border-t-hairline border-ink px-step py-5">
         <ExpandedStepHeader
           step={step}
           selectedCount={selectedCount}

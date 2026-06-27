@@ -18,7 +18,7 @@ function SummaryLineItem({ item, onQuantityChange }: SummaryLineItemProps) {
 
     return (
       <div className="flex w-full items-start justify-between">
-        <div className="flex items-center gap-[3px]">
+        <div className="flex items-center gap-2xs">
           <UnlimitedIcon
             className="h-[23.7px] w-5 shrink-0 max-[776px]:h-[17px] max-[776px]:w-3.5"
             aria-hidden
@@ -29,7 +29,7 @@ function SummaryLineItem({ item, onQuantityChange }: SummaryLineItemProps) {
               {secondWord && (
                 <>
                   {' '}
-                  <span className="text-[#4E2FD2]">{secondWord}</span>
+                  <span className="text-wyze-purple">{secondWord}</span>
                 </>
               )}
             </span>
@@ -51,7 +51,7 @@ function SummaryLineItem({ item, onQuantityChange }: SummaryLineItemProps) {
   return (
     <div className="flex w-full min-w-0 items-center gap-4 min-[777px]:max-[1196px]:gap-3 max-[776px]:items-start">
       <div className="flex min-w-0 flex-1 items-center gap-3 min-[777px]:max-[1196px]:gap-2 max-[776px]:gap-3">
-        <div className="flex h-[41px] w-[41px] shrink-0 items-center justify-center overflow-hidden rounded-[5px] bg-white min-[777px]:max-[900px]:h-[36px] min-[777px]:max-[900px]:w-[36px]">
+        <div className="flex h-[41px] w-[41px] shrink-0 items-center justify-center overflow-hidden rounded-md bg-white min-[777px]:max-[900px]:h-[36px] min-[777px]:max-[900px]:w-[36px]">
           {isShipping ? (
             <CarbonDeliveryIcon className="h-[29px] w-[29px]" aria-hidden />
           ) : (
@@ -62,7 +62,7 @@ function SummaryLineItem({ item, onQuantityChange }: SummaryLineItemProps) {
             />
           )}
         </div>
-        <span className="min-w-0 flex-1 font-medium text-sm leading-4 tracking-[0.005em] text-[#0B0D10] min-[777px]:max-[900px]:text-xs min-[777px]:max-[900px]:leading-4 max-[776px]:text-xs max-[776px]:font-medium max-[776px]:leading-4">
+        <span className="min-w-0 flex-1 font-medium text-sm leading-4 tracking-[0.005em] text-obsidian min-[777px]:max-[900px]:text-xs min-[777px]:max-[900px]:leading-4 max-[776px]:text-xs max-[776px]:font-medium max-[776px]:leading-4">
           {item.name}
         </span>
         {item.quantity != null && !isShipping && (
@@ -99,24 +99,24 @@ export function OrderSummary({
   onItemQuantityChange,
 }: OrderSummaryProps) {
   return (
-    <div className="flex w-full min-w-0 flex-col gap-[10px] min-[1197px]:w-[350px] min-[1197px]:shrink-0 min-[777px]:max-[1196px]:flex-[1.15] max-[776px]:gap-2.5">
-      <div className="flex flex-col gap-[5px]">
-        <h2 className="font-semibold text-[22px] leading-[22px] tracking-[0.6px] text-[#1F1F1F]">
+    <div className="flex w-full min-w-0 flex-col gap-sm min-[1197px]:w-[350px] min-[1197px]:shrink-0 min-[777px]:max-[1196px]:flex-[1.15] max-[776px]:gap-2.5">
+      <div className="flex flex-col gap-xs">
+        <h2 className="font-semibold text-[22px] leading-[22px] tracking-[0.6px] text-ink">
           {title}
         </h2>
-        <p className="font-normal text-sm leading-[130%] tracking-[0.6px] text-[rgba(31,31,31,0.75)] max-[776px]:text-xs max-[776px]:font-medium max-[776px]:leading-[130%]">
+        <p className="font-normal text-sm leading-[130%] tracking-[0.6px] text-ink/75 max-[776px]:text-xs max-[776px]:font-medium max-[776px]:leading-[130%]">
           {subtitle}
         </p>
       </div>
 
-      <div className="flex flex-col gap-[10px] max-[776px]:gap-2.5">
+      <div className="flex flex-col gap-sm max-[776px]:gap-2.5">
         {sections.map((section) => (
           <div
             key={section.id}
-            className="box-border flex flex-col gap-2 border-t border-[#CED6DE] pt-[15px]"
+            className="box-border flex flex-col gap-2 border-t border-gray-divider pt-step"
           >
             {section.label && (
-              <p className="font-normal text-xs uppercase leading-4 tracking-[0.03em] text-[#A8B2BD]">
+              <p className="font-normal text-xs uppercase leading-4 tracking-[0.03em] text-gray-500">
                 {section.label}
               </p>
             )}

@@ -13,13 +13,13 @@ export default function CheckoutPage() {
     useCheckoutSteps(1)
 
   return (
-    <div className="min-h-screen bg-white font-sans text-[#1F1F1F]">
-      <main className="mx-auto w-full max-w-[1440px] px-[105px] py-[49px] max-[1196px]:px-6 max-[1196px]:py-[49px] max-[776px]:flex max-[776px]:flex-col max-[776px]:gap-5 max-[776px]:px-0 max-[776px]:py-0 max-[776px]:pt-[31px]">
-        <h1 className="hidden w-full px-4 text-center font-bold text-[26px] leading-[110%] tracking-[-0.064px] text-[#1F1F1F] max-[776px]:block max-[390px]:mx-auto max-[390px]:max-w-[390px] max-[390px]:text-2xl">
+    <div className="min-h-screen bg-white font-sans text-ink">
+      <main className="mx-auto w-full max-w-[1440px] px-[105px] py-header max-[1196px]:px-6 max-[1196px]:py-header max-[776px]:flex max-[776px]:flex-col max-[776px]:gap-5 max-[776px]:px-0 max-[776px]:py-0 max-[776px]:pt-2xl">
+        <h1 className="hidden w-full px-4 text-center font-bold text-[26px] leading-[110%] tracking-[-0.064px] text-ink max-[776px]:block max-[390px]:mx-auto max-[390px]:max-w-[390px] max-[390px]:text-2xl">
           Let&apos;s get started!
         </h1>
 
-        <div className="mx-auto flex w-full max-w-none flex-row items-start gap-[29px] max-[1196px]:max-w-[1213px] max-[1196px]:flex-col max-[1196px]:gap-[13px] max-[776px]:w-full max-[776px]:gap-0 max-[390px]:max-w-[390px]">
+        <div className="mx-auto flex w-full max-w-none flex-row items-start gap-xl max-[1196px]:max-w-[1213px] max-[1196px]:flex-col max-[1196px]:gap-lg max-[776px]:w-full max-[776px]:gap-0 max-[390px]:max-w-[390px]">
           <CheckoutSteps
             data={data}
             expandedStep={expandedStep}

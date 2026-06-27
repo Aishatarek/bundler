@@ -177,7 +177,7 @@ export function useBundleState(data: ProductsData) {
       text: 'Your order is ready to be processed.',
       icon: 'success',
       confirmButtonText: 'OK',
-      confirmButtonColor: '#4e2fd2',
+      confirmButtonColor: 'var(--color-wyze-purple)',
     })
   }
 

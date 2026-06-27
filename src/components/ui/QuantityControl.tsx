@@ -32,18 +32,18 @@ export function QuantityControl({
           aria-label="Decrease quantity"
           disabled={!canDecrease}
           onClick={() => canDecrease && onChange(value - 1)}
-          className={`relative isolate flex h-5 w-5 shrink-0 items-center justify-center rounded-[4px] ${
+          className={`relative isolate flex h-5 w-5 shrink-0 items-center justify-center rounded-sm ${
             isMinusActive
-              ? 'border-2 border-[#F0F4F7] bg-[#F0F4F7]'
-              : 'border-2 border-[#E6EBF0] bg-white'
+              ? 'border-2 border-gray-surface bg-gray-surface'
+              : 'border-2 border-gray-border bg-white'
           }`}
         >
           <MinusIcon
-            className={`h-2 w-2 ${isMinusActive ? '[&_path]:fill-[#525963]' : '[&_path]:fill-[#CED6DE]'}`}
+            className={`h-2 w-2 ${isMinusActive ? '[&_path]:fill-gray-icon' : '[&_path]:fill-gray-divider'}`}
             aria-hidden
           />
         </button>
-        <span className="min-w-0 flex-1 text-center font-medium tabular-nums text-base leading-5 text-[#0B0D10]">
+        <span className="min-w-0 flex-1 text-center font-medium tabular-nums text-base leading-5 text-obsidian">
           {value}
         </span>
         <button
@@ -51,9 +51,9 @@ export function QuantityControl({
           aria-label="Increase quantity"
           disabled={disabled}
           onClick={() => !disabled && onChange(value + 1)}
-          className="flex h-5 w-5 shrink-0 items-center justify-center rounded-[4px] bg-[#F0F4F7]"
+          className="flex h-5 w-5 shrink-0 items-center justify-center rounded-sm bg-gray-surface"
         >
-          <PlusIcon className="h-2 w-2 [&_path]:fill-[#525963]" aria-hidden />
+          <PlusIcon className="h-2 w-2 [&_path]:fill-gray-icon" aria-hidden />
         </button>
       </div>
     )
@@ -68,29 +68,29 @@ export function QuantityControl({
         aria-label="Decrease quantity"
         disabled={!canDecrease}
         onClick={() => canDecrease && onChange(value - 1)}
-        className={`relative flex h-5 w-5 shrink-0 items-center justify-center rounded-[4px] ${
+        className={`relative flex h-5 w-5 shrink-0 items-center justify-center rounded-sm ${
           isSummary
             ? disabled
-              ? 'border border-[#CED6DE] bg-[#F1F1F2]'
+              ? 'border border-gray-divider bg-gray-disabled'
               : 'bg-white'
             : isMinusActive
-              ? 'border-2 border-[#F0F4F7] bg-[#F0F4F7]'
-              : 'border-2 border-[#E6EBF0] bg-white'
+              ? 'border-2 border-gray-surface bg-gray-surface'
+              : 'border-2 border-gray-border bg-white'
         }`}
       >
         <MinusIcon
           className={`h-2 w-2 ${
             disabled && isSummary
-              ? '[&_path]:fill-[#575757]'
+              ? '[&_path]:fill-price'
               : isMinusActive || (isSummary && canDecrease)
-                ? '[&_path]:fill-[#575757]'
-                : '[&_path]:fill-[#CED6DE]'
+                ? '[&_path]:fill-price'
+                : '[&_path]:fill-gray-divider'
           }`}
           aria-hidden
         />
       </button>
       <span
-        className={`min-w-0 flex-1 text-center font-medium tabular-nums text-[#0B0D10] ${
+        className={`min-w-0 flex-1 text-center font-medium tabular-nums text-obsidian ${
           isSummary ? 'text-sm font-semibold leading-4' : 'text-base leading-5'
         }`}
       >
@@ -101,16 +101,16 @@ export function QuantityControl({
         aria-label="Increase quantity"
         disabled={disabled}
         onClick={() => !disabled && onChange(value + 1)}
-        className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-[4px] ${
+        className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-sm ${
           isSummary
             ? disabled
-              ? 'border border-[#CED6DE] bg-[#F1F1F2]'
+              ? 'border border-gray-divider bg-gray-disabled'
               : 'bg-white'
-            : 'bg-[#F0F4F7]'
+            : 'bg-gray-surface'
         }`}
       >
         <PlusIcon
-          className={`h-2 w-2 ${isSummary && disabled ? '[&_path]:fill-[#575757]' : ''}`}
+          className={`h-2 w-2 ${isSummary && disabled ? '[&_path]:fill-price' : ''}`}
           aria-hidden
         />
       </button>

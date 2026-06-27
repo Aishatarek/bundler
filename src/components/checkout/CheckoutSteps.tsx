@@ -2,7 +2,7 @@ import type { ProductsData } from '../../types/product'
 import { getVariantQuantity } from '../../utils/bundleState'
 import type { useBundleState } from '../../hooks/useBundleState'
 import { Button } from '../ui'
-import { CameraProductCard } from './CameraProductCard'
+import { CameraProductCard } from './camera-product-card'
 import { PlanProductCard, StepProductCard } from './StepProductCard'
 import {
   CollapsedStep,
@@ -47,7 +47,7 @@ export function CheckoutSteps({
   const { cameraVariants } = bundleState
 
   return (
-    <div className="flex min-w-0 w-full flex-1 flex-col gap-[13px] min-[1197px]:gap-y-0 max-[776px]:w-full max-[776px]:gap-0">
+    <div className="flex min-w-0 w-full flex-1 flex-col gap-lg min-[1197px]:gap-y-0 max-[776px]:w-full max-[776px]:gap-0">
       {data.steps.map((step, index) =>
         expandedStep === step.id ? (
           <ExpandedStep
@@ -57,7 +57,7 @@ export function CheckoutSteps({
             onToggle={() => onToggleStep(step.id)}
           >
             {step.id === 1 && (
-              <div className="grid w-full grid-cols-2 gap-[15px] max-[1196px]:flex max-[1196px]:gap-[15px] max-[776px]:flex-col min-[1197px]:[&>*:last-child:nth-child(odd)]:col-span-2 min-[1197px]:[&>*:last-child:nth-child(odd)]:mx-auto">
+              <div className="grid w-full grid-cols-2 gap-step max-[1196px]:flex max-[1196px]:gap-step max-[776px]:flex-col min-[1197px]:[&>*:last-child:nth-child(odd)]:col-span-2 min-[1197px]:[&>*:last-child:nth-child(odd)]:mx-auto">
                 {data.cameras.map((camera) => {
                   const selectedColorId = selectedColors[camera.id] ?? ''
                   const variantQty = getVariantQuantity(
@@ -92,7 +92,7 @@ export function CheckoutSteps({
             )}
 
             {step.id === 2 && (
-              <div className="flex w-full flex-col gap-[15px]">
+              <div className="flex w-full flex-col gap-step">
                 {plans.map((plan) => (
                   <PlanProductCard
                     key={plan.id}
@@ -105,7 +105,7 @@ export function CheckoutSteps({
             )}
 
             {step.id === 3 && (
-              <div className="flex w-full flex-col gap-[15px]">
+              <div className="flex w-full flex-col gap-step">
                 {effectiveSensors.map((sensor) => (
                   <StepProductCard
                     key={sensor.id}
@@ -119,7 +119,7 @@ export function CheckoutSteps({
             )}
 
             {step.id === 4 && (
-              <div className="flex w-full flex-col gap-[15px]">
+              <div className="flex w-full flex-col gap-step">
                 {accessories.map((accessory) => (
                   <StepProductCard
                     key={accessory.id}

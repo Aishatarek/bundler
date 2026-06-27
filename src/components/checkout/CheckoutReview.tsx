@@ -106,28 +106,28 @@ export function CheckoutReview({
 
   return (
     <>
-      <aside className="sticky top-[49px] hidden w-[399px] shrink-0 flex-col gap-[5px] self-start rounded-[10px] bg-[#EDF4FF] pt-[15px] min-[1197px]:flex">
+      <aside className="sticky top-header hidden w-[399px] shrink-0 flex-col gap-xs self-start rounded-card bg-step-bg pt-step min-[1197px]:flex">
         <div className="flex h-3 w-full items-center">
           <StepLabel>Review</StepLabel>
         </div>
-        <div className="flex flex-col gap-[10px] px-5 pb-[31px] pt-5">
+        <div className="flex flex-col gap-sm px-5 pb-2xl pt-5">
           <ReviewContent {...reviewProps} />
         </div>
       </aside>
 
-      <section className="hidden flex-col gap-[5px] rounded-[10px] bg-[#EDF4FF] pt-[15px] min-[777px]:max-[1196px]:flex">
-        <div className="flex w-full flex-col gap-2.5 px-5 pb-[31px] pt-5 min-[777px]:max-[900px]:px-4">
+      <section className="hidden flex-col gap-xs rounded-card bg-step-bg pt-step min-[777px]:max-[1196px]:flex">
+        <div className="flex w-full flex-col gap-2.5 px-5 pb-2xl pt-5 min-[777px]:max-[900px]:px-4">
           <div className="flex w-full flex-row items-start gap-[52px] min-[777px]:max-[900px]:gap-6">
             <ReviewContent {...reviewProps} />
           </div>
         </div>
       </section>
 
-      <section className="hidden w-full flex-col gap-[5px] bg-[#EDF4FF] pt-[15px] max-[776px]:flex">
+      <section className="hidden w-full flex-col gap-xs bg-step-bg pt-step max-[776px]:flex">
         <div className="flex h-[10px] w-full items-center">
           <StepLabel collapsed>Review</StepLabel>
         </div>
-        <div className="flex flex-col gap-2.5 px-5 pb-[31px] pt-5">
+        <div className="flex flex-col gap-2.5 px-5 pb-2xl pt-5">
           <ReviewContent {...reviewProps} />
         </div>
       </section>

@@ -67,15 +67,49 @@
   --font-button: "TT Norms Pro", "Gilroy", "DM Sans", ui-sans-serif, system-ui,
     sans-serif;
 
-  /* Figma color tokens */
+  /* Colors */
   --color-wyze-purple: #4e2fd2;
+  --color-wyze-purple-selected: rgba(78, 47, 210, 0.04);
   --color-obsidian: #0b0d10;
+  --color-ink: #1f1f1f;
+  --color-gray-300: #cccccc;
   --color-gray-500: #a8b2bd;
   --color-gray-600: #6f7882;
+  --color-gray-border: #e6ebf0;
+  --color-gray-divider: #ced6de;
+  --color-gray-surface: #f0f4f7;
+  --color-gray-disabled: #f1f1f2;
+  --color-gray-icon: #525963;
+  --color-gray-label: #484848;
   --color-teal: #0aa288;
+  --color-teal-selected: rgba(29, 240, 187, 0.04);
+  --color-link: #0000ee;
   --color-red-sale: #d8392b;
   --color-price: #575757;
   --color-step-bg: #edf4ff;
+
+  /* Spacing */
+  --spacing-2xs: 3px;
+  --spacing-xs: 5px;
+  --spacing-sm: 10px;
+  --spacing-md: 11px;
+  --spacing-lg: 13px;
+  --spacing-selected: 19px;
+  --spacing-step: 15px;
+  --spacing-xl: 29px;
+  --spacing-2xl: 31px;
+  --spacing-header: 49px;
+
+  /* Border radius */
+  --radius-2xs: 2px;
+  --radius-xs: 3px;
+  --radius-sm: 4px;
+  --radius-md: 5px;
+  --radius-lg: 7px;
+  --radius-card: 10px;
+
+  /* Border width */
+  --border-width-hairline: 0.5px;
 }
 
 *,

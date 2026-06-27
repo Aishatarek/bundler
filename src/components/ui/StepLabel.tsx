@@ -8,7 +8,7 @@ interface StepLabelProps {
 export function StepLabel({ children, collapsed = false }: StepLabelProps) {
   return (
     <p
-      className={`w-full px-[15px] font-medium uppercase tracking-[1.6px] text-[#484848] ${
+      className={`w-full px-step font-medium uppercase tracking-[1.6px] text-gray-label ${
         collapsed
           ? 'text-[10px] leading-[10px]'
           : 'text-xs leading-[12px]'

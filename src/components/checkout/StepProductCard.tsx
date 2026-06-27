@@ -15,10 +15,10 @@ export function StepProductCard({
 
   return (
     <div
-      className={`flex w-full items-center gap-[15px] rounded-[7px] border px-[15px] py-4 ${
+      className={`flex w-full items-center gap-step rounded-lg border px-step py-4 ${
         isSelected
-          ? 'border-[#4E2FD2] bg-[rgba(78,47,210,0.04)]'
-          : 'border-[#E6EBF0] bg-white'
+          ? 'border-wyze-purple bg-wyze-purple-selected'
+          : 'border-gray-border bg-white'
       }`}
     >
       <img
@@ -27,11 +27,11 @@ export function StepProductCard({
         className="h-[72px] w-[72px] shrink-0 object-contain"
       />
       <div className="flex min-w-0 flex-1 flex-col gap-1">
-        <h3 className="font-semibold text-base leading-5 text-[#0B0D10]">
+        <h3 className="font-semibold text-base leading-5 text-obsidian">
           {product.name}
         </h3>
         {product.description && (
-          <p className="text-sm leading-4 text-[#575757]">
+          <p className="text-sm leading-4 text-price">
             {product.description}
           </p>
         )}
@@ -43,7 +43,7 @@ export function StepProductCard({
         />
       </div>
       {product.quantityLocked ? (
-        <span className="shrink-0 font-medium text-base leading-5 text-[#0B0D10]">
+        <span className="shrink-0 font-medium text-base leading-5 text-obsidian">
           {product.quantity}
         </span>
       ) : (
@@ -72,21 +72,21 @@ export function PlanProductCard({
     <button
       type="button"
       onClick={onSelect}
-      className={`flex w-full items-center gap-[15px] rounded-[7px] border px-[15px] py-4 text-left ${
+      className={`flex w-full items-center gap-step rounded-lg border px-step py-4 text-left ${
         selected
-          ? 'border-[#4E2FD2] bg-[rgba(78,47,210,0.04)]'
-          : 'border-[#E6EBF0] bg-white'
+          ? 'border-wyze-purple bg-wyze-purple-selected'
+          : 'border-gray-border bg-white'
       }`}
     >
       <div className="flex h-[72px] w-[72px] shrink-0 items-center justify-center">
         <PlanIcon className="h-[48px] w-[48px]" aria-hidden />
       </div>
       <div className="flex min-w-0 flex-1 flex-col gap-1">
-        <h3 className="font-semibold text-base leading-5 text-[#0B0D10]">
+        <h3 className="font-semibold text-base leading-5 text-obsidian">
           {product.name}
         </h3>
         {product.description && (
-          <p className="text-sm leading-4 text-[#575757]">
+          <p className="text-sm leading-4 text-price">
             {product.description}
           </p>
         )}

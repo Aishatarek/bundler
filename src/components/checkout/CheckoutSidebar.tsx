@@ -34,14 +34,14 @@ export function CheckoutSidebar({
           className="h-[78px] w-[78px] shrink-0 object-contain"
         />
         <div className="flex flex-col items-end justify-center gap-2">
-          <span className="inline-flex h-[18px] items-center justify-center rounded-[3px] bg-[#4E2FD2] px-2 py-[5px] font-medium text-xs leading-[15px] tracking-[-0.05em] text-white">
+          <span className="inline-flex h-[18px] items-center justify-center rounded-xs bg-wyze-purple px-2 py-[5px] font-medium text-xs leading-[15px] tracking-[-0.05em] text-white">
             as low as ${monthlyAsLowAs.toFixed(2)}/mo
           </span>
           <div className="flex items-baseline justify-end gap-2">
-            <span className="font-medium text-lg leading-5 tracking-[0.0025em] text-[#6F7882] line-through">
+            <span className="font-medium text-lg leading-5 tracking-[0.0025em] text-gray-600 line-through">
               ${originalTotal.toFixed(2)}
             </span>
-            <span className="font-bold text-2xl leading-8 tracking-[-0.00125em] text-[#4E2FD2]">
+            <span className="font-bold text-2xl leading-8 tracking-[-0.00125em] text-wyze-purple">
               ${finalTotal.toFixed(2)}
             </span>
           </div>
@@ -56,7 +56,7 @@ export function CheckoutSidebar({
             alt="100% Wyze satisfaction guarantee"
             className="h-[131px] w-[131px] shrink-0 object-contain min-[777px]:max-[900px]:h-[100px] min-[777px]:max-[900px]:w-[100px]"
           />
-          <div className="min-w-0 text-lg leading-[110%] tracking-[0.6px] text-[#1F1F1F] min-[777px]:max-[900px]:text-base">
+          <div className="min-w-0 text-lg leading-[110%] tracking-[0.6px] text-ink min-[777px]:max-[900px]:text-base">
             <span className="mb-6 block font-semibold min-[777px]:max-[900px]:mb-3">
               {guaranteeTitle}
             </span>
@@ -69,22 +69,22 @@ export function CheckoutSidebar({
         </div>
 
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <span className="inline-flex h-[27px] shrink-0 items-center justify-center rounded-[3px] bg-[#4E2FD2] px-2 py-2 font-medium text-base leading-[19px] tracking-[-0.05em] text-white min-[777px]:max-[900px]:text-sm">
+          <span className="inline-flex h-[27px] shrink-0 items-center justify-center rounded-xs bg-wyze-purple px-2 py-2 font-medium text-base leading-[19px] tracking-[-0.05em] text-white min-[777px]:max-[900px]:text-sm">
             as low as ${monthlyAsLowAs.toFixed(2)}/mo
           </span>
           <div className="flex shrink-0 items-baseline justify-end gap-2">
-            <span className="font-medium text-[22px] leading-5 tracking-[0.0025em] text-[#6F7882] line-through min-[777px]:max-[900px]:text-lg">
+            <span className="font-medium text-[22px] leading-5 tracking-[0.0025em] text-gray-600 line-through min-[777px]:max-[900px]:text-lg">
               ${originalTotal.toFixed(2)}
             </span>
-            <span className="font-bold text-[28px] leading-8 tracking-[-0.00125em] text-[#4E2FD2] min-[777px]:max-[900px]:text-2xl">
+            <span className="font-bold text-[28px] leading-8 tracking-[-0.00125em] text-wyze-purple min-[777px]:max-[900px]:text-2xl">
               ${finalTotal.toFixed(2)}
             </span>
           </div>
         </div>
       </div>
 
-      <div className="flex flex-col gap-1 pt-2.5 max-[1196px]:pt-2.5 min-[1197px]:pt-[10px] max-[776px]:pt-2.5">
-        <p className="text-center font-semibold text-xs leading-3 tracking-[-0.056px] text-[#0AA288]">
+      <div className="flex flex-col gap-1 pt-2.5 max-[1196px]:pt-2.5 min-[1197px]:pt-sm max-[776px]:pt-2.5">
+        <p className="text-center font-semibold text-xs leading-3 tracking-[-0.056px] text-teal">
           Congrats! You&apos;re saving ${savings.toFixed(2)} on your security
           bundle!
         </p>
