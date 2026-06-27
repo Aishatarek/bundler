@@ -98,11 +98,25 @@ Product catalog and step copy are driven by `src/data/products.json`, so you can
 
 **Data & state** — Product catalog, step copy, and default selections all live in `src/data/products.json`. Cart state is kept in React and derived values (summary sections, totals) are computed with `useMemo` rather than stored separately, so the review panel always reflects the builder.
 
-**Per-variant quantities** — Camera colors are tracked as `{ cameraId: { colorId: quantity } }`. The card stepper edits whichever color chip is active; every variant with quantity > 0 appears as its own line in the review panel.
+**Per-variant quantities** — Camera colors are tracked as `{ cameraId: { colorId: quantity } }`. The card stepper edits whichever color chip is active; every variant with quantity > 0 appears as its own line in the review panel. The purple selection border on a camera card reflects only the **active color’s** displayed quantity: it appears when that quantity is > 0 and is removed when it returns to 0, even if another color variant still has quantity in the bundle.
 
-**Initial load** — Default quantities for cameras, sensors, accessories, and the selected plan are seeded from the `summary` section in JSON, so the app opens matching the Figma starting state (pre-populated review panel included).
+**Camera card layouts** — Most cameras use the default grid card. Some products use alternate `standalone` or `compact` layouts (configured in JSON via `cardLayout`). All layouts share the same selection-border rules on desktop and tablet.
 
-**Sense Hub** — When at least one camera is selected, the Wyze Sense Hub is auto-included at quantity 1 and its stepper is locked in both the builder and review panel. Removing all cameras clears the hub.
+**Required sensor (Wyze Sense Hub)** — The hub is a companion item for Wyze Sense sensors, not cameras. Logic lives in `syncSenseHubWithSensors` and `getEffectiveSensors` in `bundleState.ts`:
+
+| Condition | Hub behavior |
+| --- | --- |
+| No other sensors selected (quantity 0) | Hub is hidden from step 3 and the order summary; its stored quantity is set to 0 |
+| At least one other sensor has quantity > 0 | Hub is auto-added at quantity 1, shown in the builder and summary |
+
+Additional rules:
+
+- **Trigger** — Only non-hub sensors count (e.g. Wyze Sense Motion Sensor). Camera selection does not affect the hub.
+- **Quantity** — Always 1 while sensors are selected. The user cannot increase or decrease it; the UI shows a static number instead of +/- controls in both the step card and order summary.
+- **Pricing** — Marked `FREE` in JSON (`salePriceLabel`). The original price still counts toward savings in the order total, but the final price adds $0.
+- **Sync** — Hub state is recalculated whenever a sensor quantity changes (`applySensorQuantityChange`). It is not updated when camera quantities change.
+
+**Initial load** — Default quantities for cameras, sensors, accessories, and the selected plan are seeded from the `summary` section in JSON, so the app opens matching the Figma starting state (pre-populated review panel included). If a motion sensor starts with quantity > 0, the required Sense Hub is auto-included on first load.
 
 **Persistence** — "Save my system for later" writes the bundle to `localStorage` under a single key. On return, saved state is merged back onto the current catalog so product metadata stays up to date even if JSON changes. Persistence is browser-local only (no account or server).
 

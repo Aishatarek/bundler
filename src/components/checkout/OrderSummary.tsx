@@ -66,12 +66,17 @@ function SummaryLineItem({ item, onQuantityChange }: SummaryLineItemProps) {
           {item.name}
         </span>
         {item.quantity != null && onQuantityChange && !isShipping && (
-          <QuantityControl
-            value={item.quantity}
-            onChange={onQuantityChange}
-            disabled={item.quantityLocked}
-            variant="summary"
-          />
+          item.quantityLocked ? (
+            <span className="shrink-0 font-semibold text-sm leading-4 text-[#0B0D10]">
+              {item.quantity}
+            </span>
+          ) : (
+            <QuantityControl
+              value={item.quantity}
+              onChange={onQuantityChange}
+              variant="summary"
+            />
+          )
         )}
       </div>
       <PriceDisplay

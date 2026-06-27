@@ -130,7 +130,7 @@ export function CameraProductCard({
   onQuantityChange,
   onColorChange,
 }: CameraProductCardProps) {
-  const isSelected = product.quantity > 0 || product.selected === true
+  const isSelected = product.quantity > 0
   const isStandalone = product.cardLayout === 'standalone'
   const isCompact = product.cardLayout === 'compact'
   const isAltLayout = isStandalone || isCompact
@@ -163,11 +163,10 @@ export function CameraProductCard({
       : 'text-sm leading-[130%] max-[1196px]:text-xs max-[1196px]:leading-[130%]'
 
   const desktopGap =
-    isSelected && !isAltLayout ? 'min-[1197px]:gap-[19px]' : 'min-[1197px]:gap-[13px]'
-  const desktopBorder =
-    isSelected && !isAltLayout
-      ? 'min-[1197px]:border-[rgba(78,47,210,0.7)]'
-      : 'min-[1197px]:border-transparent'
+    isSelected ? 'min-[1197px]:gap-[19px]' : 'min-[1197px]:gap-[13px]'
+  const desktopBorder = isSelected
+    ? 'min-[1197px]:border-[rgba(78,47,210,0.7)]'
+    : 'min-[1197px]:border-transparent'
   const tabletBorder = isSelected
     ? 'max-[1196px]:gap-[19px] max-[1196px]:border-[rgba(78,47,210,0.7)]'
     : 'max-[1196px]:gap-[13px] max-[1196px]:border-transparent'

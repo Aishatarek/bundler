@@ -3,6 +3,7 @@ import Swal from 'sweetalert2'
 import type { ProductsData } from '../types/product'
 import {
   applyCameraVariantQuantityChange,
+  applySensorQuantityChange,
   buildSummarySections,
   calculateOrderTotals,
   getCameraSelectedCount,
@@ -138,14 +139,7 @@ export function useBundleState(data: ProductsData) {
         return prev
       }
 
-      return {
-        ...prev,
-        sensors: prev.sensors.map((sensor) =>
-          sensor.id === id
-            ? { ...sensor, quantity: Math.max(0, quantity) }
-            : sensor,
-        ),
-      }
+      return applySensorQuantityChange(prev, id, quantity)
     })
   }
 

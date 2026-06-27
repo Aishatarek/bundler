@@ -76,18 +76,21 @@ export function hasCamerasSelected(
   return getCameraSelectedCount(cameras, cameraVariants) > 0
 }
 
-export function syncSenseHubWithCameras(
-  data: ProductsData,
-  state: BundleState,
-): BundleState {
-  const camerasSelected = hasCamerasSelected(data.cameras, state.cameraVariants)
+function hasSensorsSelected(state: BundleState): boolean {
+  return state.sensors.some(
+    (sensor) => sensor.id !== SENSE_HUB_ID && sensor.quantity > 0,
+  )
+}
+
+export function syncSenseHubWithSensors(state: BundleState): BundleState {
+  const sensorsSelected = hasSensorsSelected(state)
 
   return {
     ...state,
     sensors: state.sensors.map((sensor) => {
       if (sensor.id !== SENSE_HUB_ID) return sensor
 
-      if (camerasSelected) {
+      if (sensorsSelected) {
         return { ...sensor, quantity: Math.max(sensor.quantity, 1) }
       }
 
@@ -97,26 +100,23 @@ export function syncSenseHubWithCameras(
 }
 
 export function getEffectiveSensors(
-  data: ProductsData,
+  _data: ProductsData,
   state: BundleState,
 ): StepProduct[] {
-  const camerasSelected = hasCamerasSelected(data.cameras, state.cameraVariants)
+  const sensorsSelected = hasSensorsSelected(state)
 
-  return state.sensors.map((sensor) => {
-    if (sensor.id !== SENSE_HUB_ID) return sensor
+  return state.sensors.flatMap((sensor) => {
+    if (sensor.id !== SENSE_HUB_ID) return [sensor]
 
-    if (camerasSelected) {
-      return {
+    if (!sensorsSelected) return []
+
+    return [
+      {
         ...sensor,
         quantity: Math.max(sensor.quantity, 1),
         quantityLocked: true,
-      }
-    }
-
-    return {
-      ...sensor,
-      quantityLocked: false,
-    }
+      },
+    ]
   })
 }
 
@@ -125,6 +125,8 @@ export function isSensorQuantityLocked(
   state: BundleState,
   sensorId: string,
 ): boolean {
+  if (sensorId === SENSE_HUB_ID) return true
+
   return (
     getEffectiveSensors(data, state).find((sensor) => sensor.id === sensorId)
       ?.quantityLocked ?? false
@@ -163,7 +165,7 @@ export function createDefaultBundleState(data: ProductsData): BundleState {
     ]) ?? [],
   )
 
-  return syncSenseHubWithCameras(data, {
+  return syncSenseHubWithSensors({
     cameraVariants,
     selectedColors: Object.fromEntries(
       data.cameras.map((camera) => [camera.id, getDefaultColorId(camera)]),
@@ -189,7 +191,7 @@ export function loadBundleState(data: ProductsData): BundleState {
     }
 
     const parsed = JSON.parse(stored) as BundleState
-    return syncSenseHubWithCameras(data, {
+    return syncSenseHubWithSensors({
       ...createDefaultBundleState(data),
       ...parsed,
       plans: data.plans.map((plan) => {
@@ -445,18 +447,35 @@ export function updateCameraVariantQuantity(
 
 export function applyCameraVariantQuantityChange(
   state: BundleState,
-  data: ProductsData,
+  _data: ProductsData,
   cameraId: string,
   colorId: string,
   quantity: number,
 ): BundleState {
-  return syncSenseHubWithCameras(data, {
+  return {
     ...state,
     cameraVariants: updateCameraVariantQuantity(
       state.cameraVariants,
       cameraId,
       colorId,
       quantity,
+    ),
+  }
+}
+
+export function applySensorQuantityChange(
+  state: BundleState,
+  sensorId: string,
+  quantity: number,
+): BundleState {
+  if (sensorId === SENSE_HUB_ID) return state
+
+  return syncSenseHubWithSensors({
+    ...state,
+    sensors: state.sensors.map((sensor) =>
+      sensor.id === sensorId
+        ? { ...sensor, quantity: Math.max(0, quantity) }
+        : sensor,
     ),
   })
 }
@@ -480,14 +499,7 @@ export function resolveSummaryQuantityChange(
       return state
     }
 
-    return {
-      ...state,
-      sensors: state.sensors.map((sensor) =>
-        sensor.id === productId
-          ? { ...sensor, quantity: Math.max(0, qty) }
-          : sensor,
-      ),
-    }
+    return applySensorQuantityChange(state, productId, qty)
   }
 
   if (sectionId === 'accessories') {
