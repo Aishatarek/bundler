@@ -20,7 +20,7 @@ export function QuantityControl({
 }: QuantityControlProps) {
   const isSummary = variant === 'summary'
   const canDecrease = !disabled && value > min
-  const isMinusActive = !isSummary && value > 1
+  const isMinusActive = !isSummary && canDecrease
 
   if (!isSummary) {
     return (

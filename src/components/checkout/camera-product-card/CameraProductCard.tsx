@@ -37,10 +37,12 @@ export function CameraProductCard({
   const { desktopGap, desktopBorder, tabletBorder } =
     getCardBorderClasses(isSelected)
 
+  const canToggleViaCard = product.quantity <= 1
+
   const handleCardClick = (event: React.MouseEvent<HTMLElement>) => {
-    if (product.quantity > 0) return
+    if (!canToggleViaCard) return
     if ((event.target as HTMLElement).closest('button')) return
-    onQuantityChange(1)
+    onQuantityChange(product.quantity === 0 ? 1 : 0)
   }
 
   return (
@@ -50,7 +52,7 @@ export function CameraProductCard({
         ...(cardWidth != null ? { width: cardWidth } : {}),
       }}
       onClick={handleCardClick}
-      className={`relative box-border flex flex-wrap max-[1196px]:flex-nowrap min-w-0 flex-none flex-row items-center rounded-card border-2 bg-white p-md max-[1196px]:h-[331.1px]! max-[1196px]:w-auto! max-[1196px]:flex-1 max-[1196px]:flex-col max-[1196px]:items-center max-[1196px]:justify-center max-[1196px]:px-md max-[1196px]:py-[14px] max-[776px]:!h-auto max-[776px]:w-full max-[776px]:flex-none max-[776px]:max-w-none ${desktopGap} ${desktopBorder} ${tabletBorder} ${!isSelected ? 'cursor-pointer' : ''} ${cardWidth != null ? 'min-[1197px]:mx-auto' : ''}`}
+      className={`relative box-border flex flex-wrap max-[1196px]:flex-nowrap min-w-0 flex-none flex-row items-center rounded-card border-2 bg-white p-md max-[1196px]:h-[331.1px]! max-[1196px]:w-auto! max-[1196px]:flex-1 max-[1196px]:flex-col max-[1196px]:items-center max-[1196px]:justify-center max-[1196px]:px-md max-[1196px]:py-[14px] max-[776px]:!h-auto max-[776px]:w-full max-[776px]:flex-none max-[776px]:max-w-none ${desktopGap} ${desktopBorder} ${tabletBorder} ${canToggleViaCard ? 'cursor-pointer' : ''} ${cardWidth != null ? 'min-[1197px]:mx-auto' : ''}`}
     >
       {product.savePercent != null && (
         <SaveBadge savePercent={product.savePercent} />
